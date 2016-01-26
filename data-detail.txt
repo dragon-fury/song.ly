@@ -1,0 +1,72 @@
+Song attributes present:
+
+analysis_sample_rate: 22050
+artist_7digitalid: 324573
+artist_familiarity: 0.639902515496
+artist_hotttnesss: 0.461318337541
+artist_id: ARJNIUY12298900C91
+artist_latitude: nan
+artist_location: 
+artist_longitude: nan
+artist_mbid: 6ae6a016-91d7-46cc-be7d-5e8e5d320c54
+artist_mbtags: shape = (0,)
+artist_mbtags_count: shape = (0,)
+artist_name: Adelitas Way
+artist_playmeid: 166043
+artist_terms: shape = (11,)
+artist_terms_freq: shape = (11,)
+artist_terms_weight: shape = (11,)
+audio_md5: 7b6557889cc46b202300a4baf902e229
+bars_confidence: shape = (87,)
+bars_start: shape = (87,)
+beats_confidence: shape = (350,)
+beats_start: shape = (350,)
+danceability: 0.0
+duration: 213.9424
+end_of_fade_in: 0.0
+energy: 0.0
+key: 1
+key_confidence: 0.349
+loudness: -4.769
+mode: 1
+mode_confidence: 0.403
+release: Adelitas Way
+release_7digitalid: 497103
+sections_confidence: shape = (6,)
+sections_start: shape = (6,)
+segments_confidence: shape = (585,)
+segments_loudness_max: shape = (585,)
+segments_loudness_max_time: shape = (585,)
+segments_loudness_start: shape = (585,)
+segments_pitches: shape = (585, 12)
+segments_start: shape = (585,)
+segments_timbre: shape = (585, 12)
+similar_artists: shape = (100,)
+song_hotttnesss: 0.733371619962
+song_id: SOBLFFE12AF72AA5BA
+start_of_fade_out: 210.048
+tatums_confidence: shape = (1399,)
+tatums_start: shape = (1399,)
+tempo: 99.944
+time_signature: 4
+time_signature_confidence: 0.846
+title: Scream
+track_7digitalid: 5504670
+track_id: TRAAAAK128F9318786
+year: 2009
+
+
+Song attributes collected:
+
+artist_familiarity: 0.63063003759
+artist_hotttnesss: 0.417499644971
+artist_id: ARMJAGH1187FB546F3
+artist_name: Adelitas Way
+duration: 148.03546
+loudness: -9.843
+song_id: SOCIWDW12A8C13D406
+song_hotttnesss: 0.733371619962
+tempo: 121.274
+time_signature: 4
+title: Soul Deep
+year: 1969
