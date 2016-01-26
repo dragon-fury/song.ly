@@ -12,7 +12,7 @@ session.set_keyspace("usersong")
 session.execute("CREATE TABLE usrsngcnt (time int, user_id int, song_id int, count int, primary key (time, user_id, song_id));")
 session.execute("CREATE TABLE usrsng (user_id int, req_time int, song_id int,  primary key (user_id, req_time)) WITH CLUSTERING ORDER BY (req_time DESC);")
 session.execute("CREATE TABLE sngusr (song_id int, req_time int, user_id int,  primary key (song_id, req_time)) WITH CLUSTERING ORDER BY (req_time DESC);")
-session.execute("CREATE TABLE usrusr (song_id int, req_time int, user_id int,  primary key (song_id, req_time)) WITH CLUSTERING ORDER BY (req_time DESC);")
+session.execute("CREATE TABLE usrusr (user_id int, accept_time int, follow_user_id int,  primary key (user_id, accept_time)) WITH CLUSTERING ORDER BY (accept_time DESC);")
 
 # Close the connection
 session.shutdown()
