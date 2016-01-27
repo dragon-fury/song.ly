@@ -66,7 +66,34 @@ duration: 148.03546
 loudness: -9.843
 song_id: SOCIWDW12A8C13D406
 song_hotttnesss: 0.733371619962
-tempo: 121.274
-time_signature: 4
 title: Soul Deep
 year: 1969
+
+Unique Artists
+
+44745 unique_artists.txt
+
+AR002UA1187B9A637D<SEP>7752a11c-9d8b-4220-ac44-e4a04cc8471d<SEP>TRMUOZE12903CDF721<SEP>The Bristols
+AR003FB1187B994355<SEP>1dbd2d7b-64c8-46aa-9f47-ff589096d672<SEP>TRWDPFR128F93594A6<SEP>The Feds
+AR006821187FB5192B<SEP>94fc1228-7032-4fe6-a485-e122e5fbee65<SEP>TRMZLJF128F4269EAC<SEP>Stephen Varcoe/Choir of King's College_ Cambridge/Sir David Willcocks
+
+
+
+Unique Tracks
+
+1000000 unique_tracks.txt
+TRMMMYQ128F932D901<SEP>SOQMMHC12AB0180CB8<SEP>Faster Pussy cat<SEP>Silent Night
+TRMMMKD128F425225D<SEP>SOVFVAK12A8C1350D9<SEP>Karkkiautomaatti<SEP>Tanssi vaan
+TRMMMRX128F93187D9<SEP>SOGTUKN12AB017F4F1<SEP>Hudson Mohawke<SEP>No One Could Ever
+
+
+Artist Locations
+
+13850 artist_location.txt
+ARZGXZG1187B9B56B6<SEP>-16.96595<SEP>-61.14804<SEP>Endless Blue<SEP>Santa Cruz
+AR8K6F31187B99C2BC<SEP>46.44231<SEP>-93.36586<SEP>Go Fish<SEP>Twin Cities, MN
+ARHJJ771187FB5B581<SEP>51.59678<SEP>-0.33556<SEP>Screaming Lord Sutch<SEP>Harrow, Middlesex, England
+
+
+138,680,243 - user-song requests
+
