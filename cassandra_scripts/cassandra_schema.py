@@ -1,7 +1,7 @@
 from cassandra.cluster import Cluster
 
 # Connect to cassandra cluster
-cluster = Cluster(['52.89.0.21'])
+cluster = Cluster(['seed_node'])
 session = cluster.connect()
 
 # Create and set cassandra keyspace to work
