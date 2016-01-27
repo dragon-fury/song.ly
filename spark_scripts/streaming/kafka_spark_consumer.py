@@ -7,7 +7,7 @@ import pyspark_cassandra
 from pyspark_cassandra import streaming
 
 if __name__ == "__main__":
-    conf = SparkConf().setAppName("PySpark Cassandra Test").setMaster("spark://ip-172-31-2-132:7077").set("spark.cassandra.connection.host", "52.89.0.21")
+    conf = SparkConf().setAppName("PySpark Cassandra Test").setMaster("sparkmaster").set("spark.cassandra.connection.host", "seednode")
     sc = SparkContext(conf=conf)
     ssc = StreamingContext(sc, 1)
 
