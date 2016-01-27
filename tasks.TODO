@@ -1,0 +1,38 @@
+Tasks:
+ ☐ Suggest friends to follow for new/existing users.
+ ☐ Suggest songs to users based on current/historic song requests.
+ ☐ Use location of user to suggest songs of local artists.
+ ☐ Show trending songs.
+
+ Methods:
+ ☐ Suggest friends - songs listened @today
+ 		☐ Batch:
+			☐ Get the songs lisented to by the user (constraint by time)
+			☐ Find others who listened to those songs & not already in friend-list
+			☐ Calculate relevance with current user based on # of common songs listened to by users (will not scale for celebrities)
+			☐ Store usr1-usr2-relevance
+			☐ Keep updating relevance score for existing friend relations (add only songs listened to on a given day)
+			☐ Relevance score = (#songs common)/(#songs usr1 + #songs usr2)
+
+ 		☐ Stream:
+			☐ Return user-suggestion list sorted by relevance score
+
+ ☐ Suggest songs
+ 		☐	Batch:
+ 			☐	Frequent Pattern mining (?)
+ 			☐	Song-Song-Confidence
+
+ 		☐	Stream:
+ 			☐	Find songs listened to by friends (constraint by time)
+ 			☐	Find difference in songs listened to and suggest (sort by #listened?)
+ 			☐	Find high confidence song pairs to current song
+
+ ☐	Local Artists
+ 	 	☐	Stream:
+ 	 		☐	Match artists by location
+ 	 		☐	Get songs (sort by #listened?)
+
+ ☐	Trending songs
+ 		☐	Stream (Redis):
+ 			☐	10 for a day
+
