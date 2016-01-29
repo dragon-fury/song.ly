@@ -97,3 +97,4 @@ ARHJJ771187FB5B581<SEP>51.59678<SEP>-0.33556<SEP>Screaming Lord Sutch<SEP>Harrow
 
 138,680,243 - user-song requests
 
+Cassandra: 138680243 rows imported in 6 hours, 42 minutes, and 11.069 seconds.

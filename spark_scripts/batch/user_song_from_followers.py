@@ -16,9 +16,8 @@ def parse_log_entry(line):
 if __name__ == "__main__":
 	conf = SparkConf().setAppName("UserUserRelevance").setMaster("spark://ip-172-31-2-132:7077")
 	sc = SparkContext(conf=conf)
-	
-	# filename = datetime.now().strftime("%Y-%m-%d")+"-usersonglog.txt"
-	filename = "sample.txt"
+
+	filename = datetime.now().strftime("%Y-%m-%d")+"-usersonglog.txt"
 	users = sc.textFile("hdfs://ec2-52-35-204-86.us-west-2.compute.amazonaws.com:9000/sesha/hadoop/logs/"+filename) \
 						.map(parse_log_entry) \
 						.filter(lambda pair: pair != None) \
@@ -36,27 +35,23 @@ if __name__ == "__main__":
 	sc = CassandraSparkContext(conf=conf)
 
 	user_suggest = []
-	usersongdb = sc.cassandraTable("usersong", "usrsng")
 	songuserdb = sc.cassandraTable("usersong", "sngusr")
 	useruserdb = sc.cassandraTable("usersong", "usrusr")
-	usersongcountdb = sc.cassandraTable("usersong", "sngusrcount")
+	usersongdb = sc.cassandraTable("usersong", "usrsngcnt")
 
+	song_map = {}
 	for user in users:
-		songs = usersongdb.select("song_id") \
-				.where("user_id=? and req_time > ? and req_time < ?", int(user), five_weeks_back, now+1) \
-				.distinct() \
-				.map(lambda row: row.song_id) \
-				.collect()
+		songs = list(users[user])
 
 		for song in songs:
-			user_suggest += songuserdb.select("user_id") \
-					.where("song_id=?", int(song)) \
-					.filter(lambda row: row.user_id != int(user)) \
-					.map(lambda row: (row.user_id, 1)) \
-					.reduceByKey(lambda count1, count2: count1+count2) \
-					.sortBy(lambda x: x[1], ascending=False) \
-					.map(lambda x: x[0]) \
-					.take(10)
+			rows = songuserdb.select("song_id", "req_time", "user_id") \
+					.where("song_id=? and req_time > ? and req_time < ?", song, five_weeks_back, now+1) \
+					.filter(lambda song: len(song) == 3) \
+					.map(lambda row: (row["song_id"], [row["user_id"]])) \
+					.reduceByKey(lambda user1, user2: user1+user2) \
+					.values() \
+					.collect()
+			user_suggest += list(set(rows[0]))
 
 		
 		user_freq = Counter(user_suggest)
@@ -66,7 +61,7 @@ if __name__ == "__main__":
 			"user_id": user,
 			"time": now,
 			"any_user_id": any_user[0],
-			"relevance_score": round(float(any_user[1])/56 , 3)
+			"relevance_score": round(float(any_user[1])/ , 3)
 		} for any_user in user_freq.most_common(25)])
 
 		rdd.saveToCassandra("usersong", "usrrelevance")
