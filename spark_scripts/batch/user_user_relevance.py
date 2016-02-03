@@ -5,6 +5,16 @@ from datetime import datetime, timedelta
 from pyspark_cassandra import CassandraSparkContext
 from collections import Counter
 
+
+five_weeks_back = int((datetime.today() + timedelta(days=-1)).strftime('%s')) - 1
+now = int(datetime.today().strftime('%s'))
+
+def filterem(line):
+	val = line.split(",")
+	if len(val) < 3:
+		return False
+	return (int(val[0]) > five_weeks_back and int(val[0]) < (now+1))
+
 def parse_log_entry(line):
 	val = line.split(",")
 	if len(val) < 3:
@@ -18,10 +28,10 @@ if __name__ == "__main__":
 	sc = SparkContext(conf=conf)
 	
 	# filename = datetime.now().strftime("%Y-%m-%d")+"-usersonglog.txt"
-	filename = "sample.txt"
+	filename = "2016-01-27-usersonglog.txt"
 	users = sc.textFile("hdfs://ec2-52-35-204-86.us-west-2.compute.amazonaws.com:9000/sesha/hadoop/logs/"+filename) \
+						.filter(filterem) \
 						.map(parse_log_entry) \
-						.filter(lambda pair: pair != None) \
 						.keys() \
 						.collect()
 
@@ -36,6 +46,7 @@ if __name__ == "__main__":
 	sc = CassandraSparkContext(conf=conf)
 
 	user_suggest = []
+	song_map = {}
 	usersongdb = sc.cassandraTable("usersong", "usrsng")
 	songuserdb = sc.cassandraTable("usersong", "sngusr")
 	useruserdb = sc.cassandraTable("usersong", "usrusr")
@@ -49,16 +60,21 @@ if __name__ == "__main__":
 				.collect()
 
 		for song in songs:
-			user_suggest += songuserdb.select("user_id") \
-					.where("song_id=?", int(song)) \
-					.filter(lambda row: row.user_id != int(user)) \
-					.map(lambda row: (row.user_id, 1)) \
-					.reduceByKey(lambda count1, count2: count1+count2) \
-					.sortBy(lambda x: x[1], ascending=False) \
-					.map(lambda x: x[0]) \
-					.take(10)
+			if song in song_map:
+				listeners = song_map[song]
+			else:
+				listeners = songuserdb.select("user_id") \
+						.where("song_id=?", int(song)) \
+						#.filter(lambda row: row.user_id != int(user)) \
+						.map(lambda row: (row.user_id, 1)) \
+						.reduceByKey(lambda count1, count2: count1+count2) \
+						.sortBy(lambda x: x[1], ascending=False) \
+						.map(lambda x: x[0]) \
+						.take(11)
+				song_map[song] = listeners
 
-		
+			user_suggest += listeners
+
 		user_freq = Counter(user_suggest)
 
 		# relevance_score = # common songs (user, any_user)/ #songs for user
@@ -66,7 +82,7 @@ if __name__ == "__main__":
 			"user_id": user,
 			"time": now,
 			"any_user_id": any_user[0],
-			"relevance_score": round(float(any_user[1])/56 , 3)
+			"relevance_score": round(float(any_user[1])/len(songs) , 3)
 		} for any_user in user_freq.most_common(25)])
 
 		rdd.saveToCassandra("usersong", "usrrelevance")

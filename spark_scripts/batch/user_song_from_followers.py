@@ -5,6 +5,12 @@ from datetime import datetime, timedelta
 from pyspark_cassandra import CassandraSparkContext
 from collections import Counter
 
+def filterem(line):
+	val = line.split(",")
+	if len(val) < 3:
+		return False
+	return (int(val[0]) > five_weeks_back and int(val[0]) < (now+1))
+
 def parse_log_entry(line):
 	val = line.split(",")
 	if len(val) < 3:
@@ -19,6 +25,7 @@ if __name__ == "__main__":
 
 	filename = datetime.now().strftime("%Y-%m-%d")+"-usersonglog.txt"
 	users = sc.textFile("hdfs://ec2-52-35-204-86.us-west-2.compute.amazonaws.com:9000/sesha/hadoop/logs/"+filename) \
+						.filter(filterem) \
 						.map(parse_log_entry) \
 						.filter(lambda pair: pair != None) \
 						.keys() \
@@ -37,7 +44,7 @@ if __name__ == "__main__":
 	user_suggest = []
 	songuserdb = sc.cassandraTable("usersong", "sngusr")
 	useruserdb = sc.cassandraTable("usersong", "usrusr")
-	usersongdb = sc.cassandraTable("usersong", "usrsngcnt")
+	usersongdb = sc.cassandraTable("usersong", "usrsnglog")
 
 	song_map = {}
 	for user in users:
