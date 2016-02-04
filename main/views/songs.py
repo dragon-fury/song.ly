@@ -6,7 +6,7 @@ import json
 songs = Blueprint('songs', __name__)
 
 @songs.route('/songs/<song_id>')
-def songs(song_id):
+def song(song_id):
 	db = DBAccess()
 	song_detail = db.get_song_detail(song_id)
 	return jsonify(detail=song_detail)

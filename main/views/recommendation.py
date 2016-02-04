@@ -3,15 +3,15 @@ from jinja2 import TemplateNotFound
 from main.dbaccess import DBAccess
 import json
 
-recommendation = Blueprint('recommendation', __name__)
+recommendations = Blueprint('recommendations', __name__)
 
-@recommendation.route('/recommended_friends/<user_id>')
+@recommendations.route('/recommended_friends/<user_id>')
 def friends(user_id):
 	db = DBAccess()
 	friend_list = db.get_recommended_friends(user_id)
 	return jsonify(friends=friend_list)
 
-@recommendation.route('/recommended_songs/<user_id>')
+@recommendations.route('/recommended_songs/<user_id>')
 def songs(user_id):
 	db = DBAccess()
 	recommended_songs = db.get_recommended_songs(user_id)

@@ -1,12 +1,11 @@
-<html ng-app="eduAnalysis">
+<html ng-app="song.ly">
 	<head>
-		<title>EduAnalysis</title>
+		<title>song.ly</title>
 		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}"/>
 
 		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
 
 		<script src="{{ url_for('static', filename='js/libraries/jquery.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/general/index.js') }}"></script>
 	</head>
 	<body>
 		<div class="container-fluid whole-container">
@@ -30,5 +29,6 @@
 				<div class="col-md-3">&nbsp;</div>
 			</div>
 		</div>
+		<script src="{{ url_for('static', filename='js/general/index.js') }}"></script>
 	</body>
 </html>

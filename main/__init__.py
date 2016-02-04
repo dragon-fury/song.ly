@@ -14,10 +14,12 @@ redis_session = redis.StrictRedis(host=config.REDIS_CLUSTER_IP, port=config.REDI
 from views.general import general
 from views.users import users
 from views.songs import songs
+from views.recommendation import recommendations
 
 app.register_blueprint(general)
 app.register_blueprint(users)
 app.register_blueprint(songs)
+app.register_blueprint(recommendations)
 
 
 @app.route('/favicon.ico')
