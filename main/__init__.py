@@ -24,7 +24,7 @@ app.register_blueprint(recommendations)
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'image/favicon.ico')
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'images/favicon.ico')
 
 @app.errorhandler(404)
 def page_not_found(e):
