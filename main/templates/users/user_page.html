@@ -1,0 +1,43 @@
+<html ng-app="song.ly">
+	<head>
+		<title>song.ly</title>
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+		<link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}"/>
+		<script src="{{ url_for('static', filename='js/libraries/jquery.min.js') }}"></script>
+	</head>
+	<body>
+		<div class="container-fluid whole-container">
+			<div class="container">
+				<nav class="navbar navbar-default">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="/">
+								<img src="{{url_for('static', filename='images/songlylogo.png') }}" class="img-fluid img-rounded img-brand" alt="song.ly logo">
+							</a>
+						</div>
+						<form class="navbar-form navbar-left" role="search" style="margin-left: 50px">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Search">
+							</div>
+							<button type="submit" class="btn btn-primary">Find Song</button>
+						</form>
+						<ul class="nav navbar-nav navbar-right">
+							<li><em class="user_name"></em></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="container">
+				<div>
+					<table class="tabb"></table>
+				</div>
+				<div>
+					<table class="tabbs"></table>
+				</div>
+			</div>
+		</div>
+	<script src="{{ url_for('static', filename='js/users/user_data.js') }}"></script>
+	</body>
+</html>

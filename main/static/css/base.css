@@ -1,3 +1,8 @@
+body {
+	/*background-color: #F9F9F9;*/
+	font-family: 'Roboto', sans-serif;
+}
+
 body h1{
 	text-align: center;
 }
@@ -18,3 +23,24 @@ a, a:hover {
 }
 /* Override ends*/
 
+
+.description {
+	opacity: 0.54;
+	line-height: 32px;
+	font-size: 24px;
+	letter-spacing: .01em;
+/*	margin: 14px auto 12px auto;
+	max-width: 600px;*/
+}
+
+.description .glyphicon {
+	font-size: 18px;
+	color: #3AFFAF;
+	text-shadow: 3px 3px #ff0000;
+}
+
+.img-brand {
+	height: 65px;
+	width: 120px;
+	margin-top: -23px;
+}

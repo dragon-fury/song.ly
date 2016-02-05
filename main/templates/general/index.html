@@ -1,29 +1,60 @@
 <html ng-app="song.ly">
 	<head>
 		<title>song.ly</title>
-		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}"/>
-
 		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
-
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+		<link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}"/>
 		<script src="{{ url_for('static', filename='js/libraries/jquery.min.js') }}"></script>
 	</head>
 	<body>
 		<div class="container-fluid whole-container">
-			<h1>Songs to connect the world</h1>
 			<div class="row">
 				<div class="col-md-3">&nbsp;</div>
-				<div class="col-md-6">
-					<div class="jumbotron">
-						<h3 style="font-weight: bold">Song.ly</h3>
-						<h4 style="font-weight: bold">We connect you</h4>
-						<div class="upload">
-							<form action="" method="POST">
-								<div class="input-group">
-									<input type="text" name="userid" class="form-control userid" />
-									<input type="submit" value="Sign In" class="btn btn-primary"/>
+				<div class="col-md-6" style="background-color: #F9F9F9; height: 100%">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="jumbotron">
+								<div style="text-align:center">
+									<img src="{{url_for('static', filename='images/logo.png') }}" class="img-fluid img-rounded" alt="song.ly logo">
+									<h3>Connected by songs</h3>
+									<div class="description">
+										<span>Discover songs </span>
+										<span class="glyphicon glyphicon-play"></span>
+										<span>Discover friends </span>
+										<span class="glyphicon glyphicon-play"></span>
+										<span>Discover joy </span>
+									</div>
 								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">&nbsp;</div>
+						<div class="col-md-6">
+							<form class="form-horizontal">
+								<fieldset>
+									<div class="form-group">
+										<label for="focusedInput" class="col-lg-2 control-label">Email</label>
+										<div class="col-lg-10">
+											<input type="text" class="form-control" id="focusedInput" placeholder="Email">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputPassword" class="col-lg-2 control-label">Password</label>
+										<div class="col-lg-10">
+											<input type="password" class="form-control" id="inputPassword" placeholder="Password">
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-lg-10 col-lg-offset-4">
+											<button type="submit" class="btn btn-primary" style="font-size: 20px;">Listen</button>
+										</div>
+									</div>
+								</fieldset>
 							</form>
 						</div>
+						<div class="col-md-3">&nbsp;</div>
 					</div>
 				</div>
 				<div class="col-md-3">&nbsp;</div>

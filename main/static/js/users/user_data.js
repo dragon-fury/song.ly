@@ -4,7 +4,7 @@
 	$(".user_name").html(userid);
 	$.ajax({
 		method: "GET",
-		url: "/friends/"+userid
+		url: "/recommended_friends/"+userid
 	}).done(function(data) {
 		var s = "";
 		for(var i=0;i<data.results.length; i++) {
@@ -12,10 +12,10 @@
 		}
 		$(".tabb").html(s);
 	});
-			
+
 	$.ajax({
 		method: "GET",
-		url: "/songs/"+userid
+		url: "/recommended_songs/"+userid
 	}).done(function(data) {
 		var s = "";
 		for(var i=0;i<data.results.length; i++) {
@@ -23,5 +23,15 @@
 		}
 		$(".tabbs").html(s);
 	});
-			
+
+	$.ajax({
+		method: "GET",
+		url: "/artists/Palo Alto"
+	}).done(function(data) {
+		var s = "";
+		for(var i=0;i<data.results.length; i++) {
+			s += "<tr><td>"+data.results[i]+"</td></tr>";
+		}
+		$(".tabbs").html(s);
+	});
 })();
