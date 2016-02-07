@@ -11,3 +11,8 @@ def user(user_id):
 	user_detail = db.get_user_detail(user_id)
 
 	return render_template("users/user_page.html", detail=user_detail)
+
+@users.route('/user_name/<user_name>')
+def username(user_name):
+	db = DBAccess()
+	return db.get_user_detail_from_name(user_name)

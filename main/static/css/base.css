@@ -1,5 +1,5 @@
 body {
-	/*background-color: #F9F9F9;*/
+	background-color: #F9F9F9;
 	font-family: 'Roboto', sans-serif;
 }
 
@@ -43,4 +43,8 @@ a, a:hover {
 	height: 65px;
 	width: 120px;
 	margin-top: -23px;
+}
+
+.suggestions div {
+	margin-bottom: 20px;
 }

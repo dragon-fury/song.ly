@@ -51,8 +51,12 @@ class DBAccess(object):
 		return map(lambda x: self.redis_session.hget("artists", x), artist_ids[0:10])
 
 	def get_user_detail(self, user_id):
-		self.group = "users"
+		self.group = "usersid"
 		return self._make_json(user_id)
+
+	def get_user_detail_from_name(self, user_name):
+		self.group = "users"
+		return self._make_json(user_name)
 
 	def get_song_detail(self, song_id):
 		self.group = "songs"

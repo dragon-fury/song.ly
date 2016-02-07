@@ -19,23 +19,24 @@
 						</div>
 						<form class="navbar-form navbar-left" role="search" style="margin-left: 50px">
 							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Search">
+								<input type="text" class="form-control" placeholder="Search" />
 							</div>
 							<button type="submit" class="btn btn-primary">Find Song</button>
 						</form>
-						<ul class="nav navbar-nav navbar-right">
-							<li><em class="user_name"></em></li>
+						<ul class="nav navbar-nav navbar-right" style="margin: 15px;">
+							<li><em class="user_name" style="text-transform: capitalize">{{detail.name}}</em></li>
 						</ul>
 					</div>
 				</nav>
 			</div>
-			<div class="container">
-				<div>
-					<table class="tabb"></table>
-				</div>
-				<div>
-					<table class="tabbs"></table>
-				</div>
+			<div class="container suggestions">
+				<p><span style="font-size: 25px;font-weight:bold;">Your friends are listening to</span></p>
+				<div class="row songs_amazon"></div>
+				<p><span style="font-size: 25px;font-weight:bold;">Suggested friends</span></p>
+				<div class="row songs_friend" style="overflow-y:auto; max-width: 100%"></div>
+				<p><span style="font-size: 25px;font-weight:bold;">Songs from local artists</span></p>
+				<div class="row local_artists"></div>
+				<div class="row tabloid"></div>
 			</div>
 		</div>
 	<script src="{{ url_for('static', filename='js/users/user_data.js') }}"></script>
