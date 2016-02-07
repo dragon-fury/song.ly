@@ -1,15 +1,15 @@
-import os, config, redis
+import os, redis
 from flask import Flask, render_template, send_from_directory
 from cassandra.cluster import Cluster
 
 app = Flask(__name__)
 app.debug = config.DEBUG
 
-cluster = Cluster([config.CASSANDRA_SEED_NODE_IP])
-keyspace = config.CASSANDRA_KEYSPACE
+cluster = Cluster(['52.89.0.21'])
+keyspace = 'usersong'
 cassandra_session = cluster.connect(keyspace)
 
-redis_session = redis.StrictRedis(host=config.REDIS_CLUSTER_IP, port=config.REDIS_CLUSTER_PORT, db=0)
+redis_session = redis.StrictRedis(host='52.89.194.130', port='6379', db=0)
 
 from views.general import general
 from views.users import users

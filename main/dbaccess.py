@@ -1,7 +1,7 @@
 from main import cassandra_session, redis_session
 from cassandra import ReadTimeout
 from datetime import datetime, timedelta
-import json, config, pdb
+import json, pdb
 
 class DBAccess(object):
 	def __init__(self):
