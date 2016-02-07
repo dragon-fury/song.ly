@@ -3,7 +3,8 @@ from flask import Flask, render_template, send_from_directory
 from cassandra.cluster import Cluster
 
 app = Flask(__name__)
-app.debug = True
+
+app.debug = True 
 
 cluster = Cluster(['52.89.0.21'])
 keyspace = 'usersong'
