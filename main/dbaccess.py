@@ -12,14 +12,16 @@ class DBAccess(object):
 
 	def get_recommended_songs(self, user_id):
 		results = self.cassandra_session.execute("select follows_id, relevance_score from usrusr where user_id="+user_id)
-		most_relevant_friend = sorted(results, key=lambda row: row[1], reverse=True)[0][0]
-		results = self.cassandra_session.execute("select song_id from usrsng where user_id="+str(most_relevant_friend)+" and req_time > "+self.fifteen_weeks_ago+" and req_time < "+self.now)
-		played = self.cassandra_session.execute("select song_id from usrsng where user_id="+str(user_id)+" and req_time > "+self.fifteen_weeks_ago+" and req_time < "+self.now)
-		recommended_songs = list(set(map(lambda x: x[0], played)).difference(set(map(lambda x: x[0], results))))
-		
+		friends = sorted(results, key=lambda row: row[1], reverse=True)
 		send_songs = []
-		for song in recommended_songs[0:10]:
-			send_songs.append(json.loads(self.redis_session.hget("songs", str(song))))
+		if len(friends) > 0:
+			most_relevant_friend = friends[0][0]
+			results = self.cassandra_session.execute("select song_id from usrsng where user_id="+str(most_relevant_friend)+" and req_time > "+self.fifteen_weeks_ago+" and req_time < "+self.now)
+			played = self.cassandra_session.execute("select song_id from usrsng where user_id="+str(user_id)+" and req_time > "+self.fifteen_weeks_ago+" and req_time < "+self.now)
+			recommended_songs = list(set(map(lambda x: x[0], played)).difference(set(map(lambda x: x[0], results))))
+			
+			for song in recommended_songs[0:10]:
+				send_songs.append(json.loads(self.redis_session.hget("songs", str(song))))
 		return send_songs
 
 	def get_recommended_friends(self, user_id):

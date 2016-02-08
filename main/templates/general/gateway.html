@@ -1,0 +1,36 @@
+<html ng-app="song.ly">
+	<head>
+		<title>song.ly</title>
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
+		<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+		<link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}"/>
+		<script src="{{ url_for('static', filename='js/libraries/jquery.min.js') }}"></script>
+	</head>
+	<body>
+		<div class="container-fluid whole-container">
+			<div class="row">
+				<div class="col-md-3">&nbsp;</div>
+				<div class="col-md-6" style="background-color: #F9F9F9; height: 100%">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="jumbotron">
+								<div style="text-align:center">
+									<img src="{{url_for('static', filename='images/logo.png') }}" class="img-fluid img-rounded" alt="song.ly logo">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<a href="https://docs.google.com/presentation/d/1opfUMf8ZWFn9CTB_Rmj8oylEKWeY9_GRSWx91qVSpZw/edit#slide=id.gc6f8badac_0_47" class="btn btn-primary"> Presentation</a>
+						</div>
+
+					</div>
+				</div>
+				<div class="col-md-3">&nbsp;</div>
+			</div>
+		</div>
+		<script src="{{ url_for('static', filename='js/general/index.js') }}"></script>
+	</body>
+</html>

@@ -2,30 +2,21 @@
 
 	var userid = parseInt(window.location.pathname.split("/")[2]);
 
-	var listen = function(evt) {
-		var user_name = $("#focusedInput").val();
-
-		$.ajax({
-			url: "/users/"+user_name,
-			method: "GET"
-		}).done(function(data) {
-			if(!$.isEmptydata !== )
-		});
-
-	};
-
 	$.ajax({
 		method: "GET",
 		url: "/recommended_friends/"+userid
 	}).done(function(data) {
 		var s = "";
-		for(var i=0;i<6; i++) {
+		for(var i=0; i < data.friends.length && i<6; i++) {
 			s += '<div class="col-xs-4 col-md-2">';
 			s += '<div class="thumbnail"><img src="/static/images/friend_icon.png" /></div>'
-			s += "<div class='caption'><p style='text-align:center'><span>"+data.friends[i].name.split("_")[0]+"</span></p></div>";
+			s += "<div class='caption'><p style='text-align:center'><span>"+data.friends[i].name+"</span></p></div>";
 			s += "</div>";
 		}
-		$(".songs_friend").html(s);
+		if(s === "") {
+			s = '<div>No suggestions to show</div>';
+		}
+		$(".songs_friend").append(s);
 	});
 
 	$.ajax({
@@ -34,7 +25,7 @@
 	}).done(function(data) {
 		var s = "";
 		var year = "NA";
-		for(var i=0;i<6; i++) {
+		for(var i=0;i < data.songs.length && i<6; i++) {
 			if(data.songs[i].year !== '0') {
 				year = data.songs[i].year;
 			}
@@ -44,7 +35,10 @@
 			s += "<p style='text-align:center'><span>"+year+"</span></p></div>";
 			s += "</div>";
 		}
-		$(".songs_amazon").html(s);
+		if(s === "") {
+			s = '<div>No suggestions to show</div>';
+		}
+		$(".songs_amazon").append(s);
 	});
 
 	$.ajax({
@@ -52,12 +46,15 @@
 		url: "/artists/Palo Alto"
 	}).done(function(data) {
 		var s = "";
-		for(var i=0;i<6; i++) {
+		for(var i=0;i < data.detail.length && i<6; i++) {
 			s += '<div class="col-xs-4 col-md-2">';
 			s += '<div class="thumbnail"><img src="/static/images/map_pin.png" /></div>'
 			s += "<div class='caption'><p style='text-align:center; text-transform:capitalize;'><span>"+data.detail[i]+"</span></p></div>";
 			s += "</div>";
 		}
-		$(".local_artists").html(s);
+		if(s === "") {
+			s = '<div>No suggestions to show</div>';
+		}
+		$(".local_artists").append(s);
 	});
 })();

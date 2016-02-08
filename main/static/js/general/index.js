@@ -1,17 +1,17 @@
 (function() {
 
 	$('form').on('submit', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
 
-		var input = $(this).parents('.userid').find(':text');
+		var user_name = $("#focusedInput").val();
 
 		$.ajax({
-			method: "POST",
-			url: "/",
-			data: {
-				"user_id": input.val()
-			}
-		}).done(function(data) {
-			
+			method: "GET",
+			url: "/user_name/"+user_name
+
+		}).done(function(data){
+			window.location = "/users/"+data
 		});
 	});
 })();

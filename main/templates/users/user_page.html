@@ -30,13 +30,15 @@
 				</nav>
 			</div>
 			<div class="container suggestions">
-				<p><span style="font-size: 25px;font-weight:bold;">Your friends are listening to</span></p>
-				<div class="row songs_amazon"></div>
-				<p><span style="font-size: 25px;font-weight:bold;">Suggested friends</span></p>
-				<div class="row songs_friend" style="overflow-y:auto; max-width: 100%"></div>
-				<p><span style="font-size: 25px;font-weight:bold;">Songs from local artists</span></p>
-				<div class="row local_artists"></div>
-				<div class="row tabloid"></div>
+				<div class="row songs_amazon">
+					<p><span style="font-size: 25px;font-weight:bold;">Your friends are listening to</span></p>
+				</div>
+				<div class="row songs_friend" style="overflow-y:auto; max-width: 100%">
+					<p><span style="font-size: 25px;font-weight:bold;">Suggested friends</span></p>
+				</div>
+				<div class="row local_artists">
+					<p><span style="font-size: 25px;font-weight:bold;">Songs from local artists</span></p>
+				</div>
 			</div>
 		</div>
 	<script src="{{ url_for('static', filename='js/users/user_data.js') }}"></script>

@@ -15,4 +15,5 @@ def user(user_id):
 @users.route('/user_name/<user_name>')
 def username(user_name):
 	db = DBAccess()
-	return db.get_user_detail_from_name(user_name)
+	user_id = db.get_user_detail_from_name(user_name)
+	return str(user_id)
