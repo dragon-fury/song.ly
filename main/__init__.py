@@ -10,7 +10,7 @@ cluster = Cluster(['52.89.0.21'])
 keyspace = 'usersong'
 cassandra_session = cluster.connect(keyspace)
 
-redis_session = redis.StrictRedis(host='52.89.194.130', port='6379', db=0)
+redis_session = redis.StrictRedis(host='52.35.176.202', port=6379, db=0)
 
 from views.general import general
 from views.users import users
