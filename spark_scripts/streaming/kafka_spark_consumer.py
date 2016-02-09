@@ -10,8 +10,6 @@ def track_trends(rdditer):
 	with redis_session.pipeline() as pipe:
 		for data in rdditer:
 			pipe.zincrby("trends", str(data[2]), 1)
-			pipe.zincrby("location_trend", str(data[3]), 1)
-			# add song counts by regions
 		pipe.execute()
 
 
