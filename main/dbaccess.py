@@ -69,9 +69,24 @@ class DBAccess(object):
 		songs_json = []
 		self.group = "songs"
 		for song in top_10_songs:
-			song_name = self._make_json(song[0])["name"]
-			songs_json.append({"name": song_name, "count": song[1]}) 
+			song_detail = self._make_json(song[1])
+			song_title = song_detail["title"]
+			song_artist = song_detail["artist_name"]
+			songs_json.append({"title": song_title, "artist": song_artist, "count": int(song[0])}) 
 		return songs_json
+
+	def get_recent_songs(self, user_id):
+		one_week_ago = (datetime.today() + timedelta(weeks=-7)).strftime('%s')
+		now = (datetime.today() + timedelta(weeks=-6)).strftime('%s')
+		# now = datetime.today().strftime('%s')
+
+		results = self.cassandra_session.execute("select req_time, song_id from usrsng where user_id="+str(user_id)+" and req_time > "+one_week_ago+" and req_time < "+now)
+		sort_results = sorted(results, key=lambda x: x[0], reverse=True)
+
+		send_songs = []
+		for song in sort_results[0:10]:
+			send_songs.append(json.loads(self.redis_session.hget("songs", str(song[1]))))
+		return send_songs
 
 	def _make_json(self, key):
 		result = self.redis_session.hget(self.group, str(key))

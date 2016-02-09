@@ -17,3 +17,9 @@ def username(user_name):
 	db = DBAccess()
 	user_id = db.get_user_detail_from_name(user_name)
 	return str(user_id)
+
+@users.route('/users/<user_id>/recentsongs')
+def user_recent_songs(user_id):
+	db = DBAccess()
+	songs = db.get_recent_songs(user_id)
+	return jsonify(songs=songs)

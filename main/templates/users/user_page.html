@@ -28,19 +28,32 @@
 						</ul>
 					</div>
 				</nav>
-			</div>
-			<div class="container suggestions">
-				<div class="row songs_amazon">
-					<p><span style="font-size: 25px;font-weight:bold;">Your friends are listening to</span></p>
-				</div>
-				<div class="row songs_friend" style="overflow-y:auto; max-width: 100%">
-					<p><span style="font-size: 25px;font-weight:bold;">Suggested friends</span></p>
-				</div>
-				<div class="row local_artists">
-					<p><span style="font-size: 25px;font-weight:bold;">Songs from local artists</span></p>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row songs_amazon suggestions">
+							<p><span style="font-size: 25px;font-weight:bold;">Your friends are listening to</span></p>
+						</div>
+						<div class="row local_artists suggestions">
+							<p><span style="font-size: 25px;font-weight:bold;">Songs from local artists</span></p>
+						</div>
+						<div class="row listings">
+							<div class="col-md-4">
+								<p><span style="font-size: 25px;font-weight:bold;">Suggested friends</span></p>
+								<div class="songs_friend"></div>
+							</div>
+							<div class="col-md-4">
+								<p><span style="font-size: 25px;font-weight:bold;">Trending songs</span></p>
+								<div class="songs_trending"></div>
+							</div>
+							<div class="col-md-4">
+								<p><span style="font-size: 25px;font-weight:bold;">Recently Listened</span></p>
+								<div class="recently"></div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	<script src="{{ url_for('static', filename='js/users/user_data.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/users/user_data.js') }}"></script>
 	</body>
 </html>
