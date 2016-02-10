@@ -29,14 +29,15 @@
 	}).done(function(data) {
 		var s = "";
 		var year = "NA";
-		for(var i=0;i < data.songs.length && i<6; i++) {
-			if(data.songs[i].year !== '0') {
-				year = data.songs[i].year;
+		for(var i=0;i < data.songs.songs.length && i<6; i++) {
+			if(data.songs.songs[i].year !== '0') {
+				year = data.songs.songs[i].year;
 			}
 			s += '<div class="col-xs-4 col-md-2">';
 			s += '<div class="thumbnail"><img src="/static/images/icon.png" /></div>'
-			s += "<div class='caption'><p style='text-align:center'><span>"+data.songs[i].title+"</span></p>";
+			s += "<div class='caption'><p style='text-align:center'><span>"+data.songs.songs[i].title+"</span></p>";
 			s += "<p style='text-align:center'><span>"+year+"</span></p></div>";
+			s += "<p style='text-align:center'><span>"+data.songs.friend+"</span></p></div>";
 			s += "</div>";
 		}
 		if(s === "") {
