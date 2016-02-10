@@ -72,7 +72,7 @@ class DBAccess(object):
 			song_detail = self._make_json(song[1])
 			song_title = song_detail["title"]
 			song_artist = song_detail["artist_name"]
-			songs_json.append({"title": song_title, "artist": song_artist, "count": int(song[0])}) 
+			songs_json.append({"title": song_title, "artist": song_artist, "count": int(song[1])}) 
 		return songs_json
 
 	def get_recent_songs(self, user_id):
