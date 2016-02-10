@@ -91,7 +91,7 @@
 			method: "GET",
 			url: "/songs/trending",
 			dataType: "json",
-			// complete: poll,
+			complete: poll,
 			timeout: 10000
 		}).done(function(data) {
 			var s = "";
@@ -103,7 +103,7 @@
 				s += '<div class="col-md-4"><img src="/static/images/icon.png" /></div>';
 				s += "<div class='col-md-8'><p><span class='title'>"+data.trending[i].title+"</span></p>";
 				s += "<p><span>"+data.trending[i].artist+"</span></p>";
-				s += "<p><span>"+data.trending[i].count+"</span></p></div>";
+				s += "<p><span>Listened <em style='font-weight:bold'>"+data.trending[i].count+"</em> times</span></p></div>";
 				s += "</div>";
 			}
 			s += "</div></div>";

@@ -5,7 +5,11 @@ import json
 
 general = Blueprint('general', __name__)
 
-@general.route('/', methods=['GET', 'POST'])
+@general.route('/')
+def index():
+	return render_template("general/gateway.html")
+
+@general.route('/login', methods=['GET', 'POST'])
 def index_login():
 	if request.method == 'POST':
 		user_id = request.form["userid"]

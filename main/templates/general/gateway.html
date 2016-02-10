@@ -9,28 +9,24 @@
 	</head>
 	<body>
 		<div class="container-fluid whole-container">
-			<div class="row">
-				<div class="col-md-3">&nbsp;</div>
-				<div class="col-md-6" style="background-color: #F9F9F9; height: 100%">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="jumbotron">
-								<div style="text-align:center">
-									<img src="{{url_for('static', filename='images/logo.png') }}" class="img-fluid img-rounded" alt="song.ly logo">
-								</div>
-							</div>
+			<div class="container">
+				<nav class="navbar navbar-default">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="/">
+								<img src="{{url_for('static', filename='images/songlylogo.png') }}" class="img-fluid img-rounded img-brand" alt="song.ly logo">
+							</a>
 						</div>
+						<ul class="nav navbar-nav navbar-right" style="margin: 15px;">
+							<li class="active"><a href="/">Presentation</a></li>
+							<li><a href="/login">Demo</a></li>
+						</ul>
 					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<a href="https://docs.google.com/presentation/d/1opfUMf8ZWFn9CTB_Rmj8oylEKWeY9_GRSWx91qVSpZw/edit#slide=id.gc6f8badac_0_47" class="btn btn-primary"> Presentation</a>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-md-3">&nbsp;</div>
+				</nav>
+			</div>
+			<div class="container" style="text-align: center;">
+				<iframe src="https://docs.google.com/presentation/d/1opfUMf8ZWFn9CTB_Rmj8oylEKWeY9_GRSWx91qVSpZw/embed?start=false&loop=false&delayms=60000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 			</div>
 		</div>
-		<script src="{{ url_for('static', filename='js/general/index.js') }}"></script>
 	</body>
 </html>
