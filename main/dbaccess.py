@@ -22,7 +22,8 @@ class DBAccess(object):
 			
 			for song in recommended_songs[0:10]:
 				send_songs.append(json.loads(self.redis_session.hget("songs", str(song))))
-		return {"friend": most_relevant_friend, "songs": send_songs}
+		friend = json.loads(self.redis_session.hget("usersid", most_relevant_friend))
+		return {"friend": friend["name"], "songs": send_songs}
 
 	def get_recommended_friends(self, user_id):
 		suggestions = self.redis_session.hget("friend_suggest", str(user_id))
