@@ -1,16 +1,13 @@
-# For this implementation: Think of a day when new album was released and heavy traffic was on that one album
-import pyspark_cassandra, time
-from pyspark import SparkConf, SparkContext
+import pyspark_cassandra, time, config
+from pyspark import SparkConf
 from datetime import datetime, timedelta
 from pyspark_cassandra import CassandraSparkContext
 from collections import Counter
 
+five_weeks_back = int((datetime.today() + timedelta(weeks=-5)).strftime('%s')) - 1
+now = int(datetime.today().strftime('%s'))
 
-five_weeks_back = int((datetime.today() + timedelta(weeks=-6)).strftime('%s')) - 1
-now = int((datetime.today() + timedelta(weeks=-1)).strftime('%s')) - 1
-# now = int(datetime.today().strftime('%s'))
-
-def filterem(line):
+def time_range_filter(line):
 	val = line.split(",")
 	if len(val) < 3:
 		return False
@@ -25,31 +22,20 @@ def parse_log_entry(line):
 # Make userid parameterized
 
 if __name__ == "__main__":
-	conf = SparkConf().setAppName("UserUserRelevance").setMaster("spark://ip-172-31-2-132:7077")
-	sc = SparkContext(conf=conf)
+	conf = SparkConf().setAppName("UserUserRelevance").setMaster(config.SPARK_MASTER).set("spark.cassandra.connection.host", config.CASSANDRA_SEED_NODE_IP)
+	sc = CassandraSparkContext(conf=conf)
 	
-	# filename = datetime.now().strftime("%Y-%m-%d")+"-usersonglog.txt"
-	filename = "2016-01-27-usersonglog.txt"
-	users = sc.textFile("hdfs://ec2-52-35-204-86.us-west-2.compute.amazonaws.com:9000/sesha/hadoop/logs/"+filename) \
-						.filter(filterem) \
+	filename = datetime.now().strftime("%Y-%m-%d")+"-usersonglog.txt"
+
+	users = sc.textFile(config.HDFS_URL+":"+config.HDFS_PORT+config.LOG_FOLDER+filename) \
+						.filter(time_range_filter) \
 						.map(parse_log_entry) \
 						.keys() \
 						.collect()
 
-	sc.stop()
-
-	time.sleep(5)
-
-	five_weeks_back = int((datetime.today() + timedelta(weeks=-6)).strftime('%s')) - 1
-	now = int((datetime.today() + timedelta(weeks=-1)).strftime('%s')) - 1
-	# now = int(datetime.today().strftime('%s'))
-
-	conf = SparkConf().setAppName("UserUserRelevance").setMaster("spark://ip-172-31-2-132:7077").set("spark.cassandra.connection.host", "52.89.0.21")
-	sc = CassandraSparkContext(conf=conf)
-
 	song_map = {}
-	usersongdb = sc.cassandraTable("usersong", "usrsng")
-	songuserdb = sc.cassandraTable("usersong", "sngusr")
+	usersongdb = sc.cassandraTable(config.CASSANDRA_KEYSPACE, "user_to_song")
+	songuserdb = sc.cassandraTable(config.CASSANDRA_KEYSPACE, "song_to_user")
 
 	for user in users:
 		user_suggest = []
@@ -81,14 +67,14 @@ if __name__ == "__main__":
 
 			user_freq = Counter(user_suggest)
 
-			# relevance_score = # common songs (user, any_user)/ #songs for user
+			# relevance_score = # common songs (user, suggested_user)/ #songs for user
 			rdd = sc.parallelize([{
 				"user_id": user,
 				"timestamp": now,
-				"suggested_user_id": any_user[0],
-				"relevance_score": round(float(any_user[1])/len(songs) , 3)
-			} for any_user in user_freq.most_common(25)])
+				"suggested_user_id": suggested_user[0],
+				"relevance_score": round(float(suggested_user[1])/len(songs) , 3)
+			} for suggested_user in user_freq.most_common(25)])
 
-			rdd.saveToCassandra("usersong", "user_relevance")
+			rdd.saveToCassandra(config.CASSANDRA_KEYSPACE, "user_relevance")
 
 	sc.stop()
