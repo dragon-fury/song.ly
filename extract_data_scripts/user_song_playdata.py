@@ -8,6 +8,7 @@ def strTimeProp(start, end, format, prop):
 
 	return time.strftime("%s", time.localtime(ptime))
 
+# return random timestamps between given dates
 def randomDate():
 	return strTimeProp("1/1/2015 12:01 AM", "1/30/2016 11:59 PM", '%m/%d/%Y %I:%M %p', random.random())
 
@@ -15,10 +16,8 @@ filed = open(sys.argv[1], "r")
 write_user_song = open("user_to_song.csv", "w+")
 write_song_user = open("song_to_user.csv", "w+")
 
-counter = 0
-total_counter = 0
-user_song_list = ""
-song_user_list = ""
+counter = total_counter = 0
+user_song_list = song_user_list = ""
 
 for line in filed:
 	user, song, count = line.split(",")
@@ -29,19 +28,19 @@ for line in filed:
 		counter += 1
 		total_counter += 1
 
+	# write to files after every 100000 rows read
 	if counter > 100000:
 		write_user_song.write(user_song_list)
 		write_song_user.write(song_user_list)
 
 		counter = 0
-		user_song_list = ""
-		song_user_list = ""
+		user_song_list = song_user_list = ""
 
 if counter > 0:
 	write_user_song.write(user_song_list)
 	write_song_user.write(song_user_list)
 
 
-write_user_song.close()		
-write_song_user.close()		
-filed.close()	
+write_user_song.close()
+write_song_user.close()
+filed.close()
