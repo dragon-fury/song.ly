@@ -1,14 +1,23 @@
-# For this implementation: Think of a day when new album was released and heavy traffic was on that one album
-import pyspark_cassandra, time
-from pyspark import SparkConf, SparkContext
+import pyspark_cassandra, time, config
+from pyspark import SparkConf
 from pyspark_cassandra import CassandraSparkContext
 from collections import Counter
+from itertools import combinations
 from datetime import datetime, timedelta
 
-five_weeks_back = int((datetime.today() + timedelta(days=-1)).strftime('%s')) - 1
+"""
+This script provides frequency for pairs of songs frequently listened together
+in a given time period.
+
+	1. Find all the song requests within a given period of time (5 weeks here)
+	2. Group the requests by user's to obtain a list of "transaction" of songs
+	3. 
+"""
+
+five_weeks_back = int((datetime.today() + timedelta(weeks=-5)).strftime('%s')) - 1
 now = int(datetime.today().strftime('%s'))
 
-def filterem(line):
+def time_range_filter(line):
 	val = line.split(",")
 	if len(val) < 3:
 		return False
@@ -21,63 +30,32 @@ def parse_log_entry(line):
 		return None
 	return (str(val[1]), [str(val[2])])
 
-# Make userid parameterized
+def produce_song_pairs(song_list):
+	song_pairs = combinations(song_list, 2)
+	song_pairs_list = map(lambda song_pair: (song_pair, 1), song_pairs)
+	return song_pairs_list
+
+def cassandra_row_format(song_pair):
+	songs = song_pair[0]
+	frequency = song_pair[1]
+	return [{"song_id": int(songs[0]), "freq_song_id": int(songs[1]), "frequency": frequency}, {"song_id": int(songs[1]), "freq_song_id": int(songs[0]), "frequency": frequency}]
+
 
 if __name__ == "__main__":
-	conf = SparkConf().setAppName("UserUserRelevance").setMaster("spark://ip-172-31-2-132:7077")
-	sc = SparkContext(conf=conf)
-
-	five_months_back = int((datetime.today() + timedelta(weeks=-25)).strftime('%s')) - 1
-	now = int(datetime.today().strftime('%s'))
-	filename = datetime.now().strftime("%Y-%m-%d")+"-usersonglog.txt"
-
-	transaction = sc.textFile("hdfs://ec2-52-35-204-86.us-west-2.compute.amazonaws.com:9000/sesha/hadoop/logs/"+filename) \
-						.filter(filterem) \
-						.map(parse_log_entry) \
-						.reduceByKey(lambda song1, song2: song1+song2) \
-						.map(lambda x: (x[0], list(set(x[1])))) \
-						.values() \
-						.collect()
-
-
-	sc.stop()
-
-	time.sleep(5)
-
-	five_months_back = int((datetime.today() + timedelta(weeks=-25)).strftime('%s')) - 1
-	now = int(datetime.today().strftime('%s'))
-
-	conf = SparkConf().setAppName("UserUserRelevance").setMaster("spark://ip-172-31-2-132:7077").set("spark.cassandra.connection.host", "52.89.0.21")
+	conf = SparkConf().setAppName("FrequentPatternsSongs").setMaster(config.SPARK_MASTER).set("spark.cassandra.connection.host", config.CASSANDRA_SEED_NODE_IP)
 	sc = CassandraSparkContext(conf=conf)
 
-	user_suggest = []
-	songuserdb = sc.cassandraTable("usersong", "sngusr")
-	useruserdb = sc.cassandraTable("usersong", "usrusr")
+	filename = datetime.now().strftime("%Y-%m-%d")+"-usersonglog.txt"
 
-	for user in users.keys():
-		songs = list(users[user])
-
-		for song in songs:
-			rows = songuserdb.select("song_id", "req_time", "user_id") \
-					.where("song_id=? and req_time > ? and req_time < ?", song, five_months_back, now+1) \
-					.filter(lambda song: len(song) == 3) \
-					.map(lambda row: (row["song_id"], [row["user_id"]])) \
-					.reduceByKey(lambda user1, user2: user1+user2) \
-					.values() \
-					.collect()
-			user_suggest += list(set(rows[0]))
-
-		
-		user_freq = Counter(user_suggest)
-
-		# relevance_score = # common songs (user, any_user)/ #songs for user
-		rdd = sc.parallelize([{
-			"user_id": user,
-			"time": now,
-			"any_user_id": any_user,
-			"relevance_score": user_freq[any_user]/len(songs)
-		} for any_user in user_freq])
-
-		rdd.saveToCassandra("usersong", "usrrelevance")
+	sc.textFile(config.HDFS_URL+":"+config.HDFS_PORT+config.LOG_FOLDER+filename) \
+		.filter(time_range_filter) \
+		.map(parse_log_entry) \
+		.reduceByKey(lambda song1, song2: song1+song2) \
+		.map(lambda x: sorted(set(x[1]))) \
+		.flatMap(produce_song_pairs) \
+		.reduceByKey(lambda a,b: a+b) \
+		.filter(lambda song_pair: song_pair[1] > 3) \
+		.flatMap(cassandra_row_format) \
+		.saveToCassandra("usersong", "frequent_song_pairs")
 
 	sc.close()
