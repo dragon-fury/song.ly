@@ -1,11 +1,11 @@
 Tasks:
- ☐ Suggest friends to follow for new/existing users.
- ☐ Suggest songs to users based on current/historic song requests.
- ☐ Use location of user to suggest songs of local artists.
- ☐ Show trending songs.
+ ✔ Suggest friends to follow for new/existing users. @done (16-02-11 12:30)
+ ✔ Suggest songs to users based on current/historic song requests. @done (16-02-11 12:30)
+ ✔ Use location of user to suggest songs of local artists. @done (16-02-11 12:30)
+ ✔ Show trending songs. @done (16-02-11 12:30)
 
  Methods:
- ☐ Suggest friends - songs listened
+ ✔ Suggest friends - songs listened @done (16-02-11 12:29)
  		☐ Batch: @finished
  			☐	Get users who listened to any song in the last 24 hours - only they need update
 			☐ Get the songs lisented to by the user (constraint by time)
@@ -18,21 +18,21 @@ Tasks:
  		☐ Stream: @finished
 			☐ Return user-suggestion list sorted by relevance score
 
- ☐ Suggest songs
- 		☐	Batch: @pending
- 			☐	Frequent Pattern mining (?)
- 			☐	Song-Song-Confidence 
+ ✔ Suggest songs @done (16-02-11 12:29)
+ 		☐	Batch: @finished
+ 			☐	Frequently occuring together
+ 			☐	Song-Song-Count 
 
  		☐	Stream:
  			☐	Find difference in songs listened to and suggest (sort by #listened?) @finished
- 			☐	Find high confidence song pairs to current song @pending
+ 			☐	Find high count song pairs to current song @finished
 
- ☐	Local Artists
- 	 	☐	Python Web:  
+ ✔  Local Artists @done (16-02-11 12:29)
+ 	 	☐	Python Web:  @finished
  	 		☐	Match artists by location
  	 		☐	Get songs (sort by #listened?)
 
- ☐	Trending songs
+ ✔  Trending songs @done (16-02-11 12:29)
  		☐	Stream (Redis): @finished
  			☐	10 for a day
 

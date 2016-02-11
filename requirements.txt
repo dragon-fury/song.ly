@@ -1,6 +1,5 @@
 cassandra-driver==3.0.0
 Flask==0.10.1
--e git+http://github.com/sjl/flask-lesscss.git@724e999f6d728be81f057ac4d5ebc8d9757b950e#egg=flask_lesscss
 futures==3.0.4
 gunicorn==19.4.5
 itsdangerous==0.24
