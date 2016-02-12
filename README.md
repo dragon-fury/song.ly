@@ -49,6 +49,7 @@ frequent_song_pairs: (batch) stores song-song frequencies
 Demo
 ===========
 The application can be accessed at [song.ly](http://song-ly.herokuapp.com)
+To login username: adam, password: 123
 
 
 References
