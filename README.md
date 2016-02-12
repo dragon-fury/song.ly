@@ -39,12 +39,12 @@ Data Pipeline
 
 Cassandra Tables
 ===============
-user_song_log: (streaming) stores user-song requests partitioned by time
-user_to_song: (streaming) stores user-song requests partitioned by user
-song_to_user: (streaming) stores user-song requests partitioned by song
-user_connections: stores user's connections (follows) partitioned by user
-user_relevance: (batch) stores suggested users with relevance score 
-frequent_song_pairs: (batch) stores song-song frequencies
+user_song_log: (streaming) stores user-song requests partitioned by time  
+user_to_song: (streaming) stores user-song requests partitioned by user  
+song_to_user: (streaming) stores user-song requests partitioned by song  
+user_connections: stores user's connections (follows) partitioned by user  
+user_relevance: (batch) stores suggested users with relevance score  
+frequent_song_pairs: (batch) stores song-song frequencies  
 
 Demo
 ===========
