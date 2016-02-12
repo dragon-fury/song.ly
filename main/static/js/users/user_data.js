@@ -29,17 +29,17 @@
 	}).done(function(data) {
 		var s = "";
 		var year = "NA";
-		for(var i=0;i < data.songs.songs.length && i<6; i++) {
+		s += '<div class="col-xs-4 col-md-2 scroller"><ul>';
+		for(var i=0;i < data.songs.songs.length; i++) {
 			if(data.songs.songs[i].year !== '0') {
 				year = data.songs.songs[i].year;
 			}
-			s += '<div class="col-xs-4 col-md-2">';
-			s += '<div class="thumbnail"><img src="/static/images/icon.png" /></div>'
-			s += "<div class='caption'><p style='text-align:center'><span>"+data.songs.songs[i].title+"</span></p>";
-			s += "<p style='text-align:center'><span>"+year+"</span></p></div>";
-			s += "<p style='text-align:center'><span>"+data.songs.friend+"</span></p></div>";
-			s += "</div>";
+			
+			s += '<li><img src="/static/images/icon.jpg" />';
+			s += "<p><span>"+data.songs.songs[i].title+"</span><br/>";
+			s += "<span>"+year+"</span><br/>";
 		}
+		s += "</ul></div>";
 		if(s === "") {
 			s = '<div>No suggestions to show</div>';
 		}
@@ -51,12 +51,12 @@
 		url: "/artists/Palo Alto"
 	}).done(function(data) {
 		var s = "";
-		for(var i=0;i < data.detail.length && i<6; i++) {
-			s += '<div class="col-xs-4 col-md-2">';
-			s += '<div class="thumbnail"><img src="/static/images/map_pin.png" /></div>'
-			s += "<div class='caption'><p style='text-align:center; text-transform:capitalize;'><span>"+data.detail[i]+"</span></p></div>";
-			s += "</div>";
+		s += '<div class="col-xs-4 col-md-2 scroller"><ul>';
+		for(var i=0;i < data.detail.length; i++) {
+			s += '<li><img src="/static/images/map_pin.png"/>';
+			s += "<p><span>"+data.detail[i]+"</span></p></li>";
 		}
+		s += "</ul></div>";
 		if(s === "") {
 			s = '<div>No suggestions to show</div>';
 		}
@@ -73,7 +73,7 @@
 
 		for(var i=0; i < data.songs.length; i++) {
 			s += '<div class="row friend_box">';
-			s += '<div class="col-md-4"><img src="/static/images/icon.png" /></div>';
+			s += '<div class="col-md-4"><img src="/static/images/icon.jpg" /></div>';
 			s += "<div class='col-md-8'><p><span class='title'>"+data.songs[i].title+"</span></p></div>";
 			s += "<p><span>"+data.songs[i].artist_name+"</span></p>";
 			s += "</div>";
@@ -101,7 +101,7 @@
 			data.trending.sort(function(a,b){ return b.count - a.count;})
 			for(var i=0; i < data.trending.length; i++) {
 				s += '<div class="row friend_box">';
-				s += '<div class="col-md-4"><img src="/static/images/icon.png" /></div>';
+				s += '<div class="col-md-4"><img src="/static/images/icon.jpg" /></div>';
 				s += "<div class='col-md-8'><p><span class='title'>"+data.trending[i].title+"</span></p>";
 				s += "<p><span>"+data.trending[i].artist+"</span></p>";
 				s += "<p><span>Listened <em style='font-weight:bold'>"+data.trending[i].count+"</em> times</span></p></div>";

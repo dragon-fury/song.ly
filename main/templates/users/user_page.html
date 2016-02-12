@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<div class="container-fluid whole-container">
-			<div class="container">
+			<div class="container" style="background-color: #F9F9F9;">
 				<nav class="navbar navbar-default">
 					<div class="container-fluid">
 						<div class="navbar-header">
@@ -17,12 +17,6 @@
 								<img src="{{url_for('static', filename='images/logo.png') }}" class="img-fluid img-rounded img-brand" alt="song.ly logo">
 							</a>
 						</div>
-						<form class="navbar-form navbar-left" role="search" style="margin-left: 50px">
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Search" />
-							</div>
-							<button type="submit" class="btn btn-primary">Find Song</button>
-						</form>
 						<ul class="nav navbar-nav navbar-right" style="margin: 15px;">
 							<li><em class="user_name" style="text-transform: capitalize">{{detail.name}}</em></li>
 						</ul>
@@ -31,22 +25,22 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="row songs_amazon suggestions">
-							<p><span style="font-size: 25px;font-weight:bold;">Your friends are listening to</span></p>
+							<p class="list-titles"><span>Your friends are listening to</span></p>
 						</div>
 						<div class="row local_artists suggestions">
-							<p><span style="font-size: 25px;font-weight:bold;">Local artists</span></p>
+							<p class="list-titles"><span>Local artists</span></p>
 						</div>
 						<div class="row listings">
 							<div class="col-md-4">
-								<p><span style="font-size: 25px;font-weight:bold;">Suggested friends</span></p>
+								<p class="list-titles"><span>Suggested friends</span></p>
 								<div class="songs_friend"></div>
 							</div>
 							<div class="col-md-4">
-								<p><span style="font-size: 25px;font-weight:bold;">Trending songs</span></p>
+								<p class="list-titles"><span>Trending songs</span></p>
 								<div class="songs_trending"></div>
 							</div>
 							<div class="col-md-4">
-								<p><span style="font-size: 25px;font-weight:bold;">Recently Listened</span></p>
+								<p class="list-titles"><span>Recently Listened</span></p>
 								<div class="recently"></div>
 							</div>
 						</div>

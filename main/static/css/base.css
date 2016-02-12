@@ -1,7 +1,5 @@
 body {
-	/*background-color: #4284F3;*/
 	font-family: 'Roboto', sans-serif;
-	/*color: #FFF;*/
 }
 
 body h1{
@@ -41,22 +39,19 @@ a, a:hover {
 }
 
 .img-brand {
-	height: 65px;
-	width: 120px;
+	height: 66px;
+	width: 100px;
 	margin-top: -23px;
 }
 
 .suggestions {
-	margin-bottom: 75px;
+	margin-bottom: 20px;
+	padding-right: 15px;
 }
 
-.suggestions .thumbnail {
-	margin-bottom: 10px;
-	border: 1px solid #000;
-}
-
-.suggestions .caption p {
-	margin-bottom: 0;
+.suggestions .scroller{
+	overflow-x: auto;
+	width: 100%;
 }
 
 .friend_box {
@@ -86,5 +81,45 @@ a, a:hover {
 	overflow-x: hidden;
 	max-height: 300px;
 	border: 3px solid #000;
+	margin-bottom: 10px;
+}
+
+.thumbnail {
+	padding-right: 0;
+	padding-left: 0;
+	margin-bottom: 2px;
+}
+
+.songs_amazon ul, .local_artists ul {
+	display: table;
+	list-style: none;
+	padding: 0;
+}
+
+.songs_amazon li, .local_artists li {
+	display: table-cell;
+	padding-right: 25px;
+}
+
+.songs_amazon li p, .local_artists li p {
+	text-align:center;
+	text-transform:capitalize;
+	padding-top: 10px;
+	padding-bottom: 0;
+
+	font-weight: bold;
+}
+
+p.list-titles {
+	font-size: 25px;
+	font-weight:bold;
+	padding-left: 15px;
+}
+
+ul img {
+	width: 125px;
+	height: 125px;
+	padding: 10px;
+	border: 1px solid #000;
 }
 
