@@ -40,3 +40,13 @@ I used the "Million Song Dataset" [1] which is "a freely-available collection of
 ## Demo
 ------------
 The application can be accessed from [song.ly](http://song-ly.herokuapp.com)
+
+
+## References
+-------------
+[1] Thierry Bertin-Mahieux, Daniel P.W. Ellis, Brian Whitman, and Paul Lamere. 
+	The Million Song Dataset. In Proceedings of the 12th International Society
+	for Music Information Retrieval Conference (ISMIR 2011), 2011.
+
+[2] The Echo Nest Taste profile subset, the official user data collection for the Million Song
+	Dataset, available at: http://labrosa.ee.columbia.edu/millionsong/tasteprofile
