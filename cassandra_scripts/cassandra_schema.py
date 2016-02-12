@@ -15,6 +15,7 @@ session.execute("CREATE TABLE user_to_song (user_id int, req_time int, song_id i
 session.execute("CREATE TABLE song_to_user (song_id int, req_time int, user_id int,  primary key (song_id, req_time, user_id)) WITH CLUSTERING ORDER BY (req_time DESC);")
 session.execute("CREATE TABLE user_connections (user_id int, follows_id int, relevance_score float, primary key(user_id, follows_id));")
 session.execute("CREATE TABLE user_relevance (user_id int, timestamp int, suggested_user_id int, relevance_score float, primary key (user_id, timestamp, suggested_user_id)) WITH CLUSTERING ORDER BY (timestamp DESC);")
+session.execute("CREATE TABLE frequent_song_pairs (song_id int, freq_song_id int, frequency int, primary key (song_id, freq_song_id));")
 
 # Close the connection
 session.shutdown()

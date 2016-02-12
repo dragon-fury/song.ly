@@ -1,6 +1,6 @@
-import os, redis, config
 from flask import Flask, render_template, send_from_directory
 from cassandra.cluster import Cluster
+import os, redis, config
 
 app = Flask(__name__)
 
