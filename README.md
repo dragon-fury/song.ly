@@ -1,0 +1,42 @@
+song.ly - connected by songs
+=================================
+
+song\.ly (song + friendly) is a song recommendation application built during my time at Insight Data Engineering program.  
+
+## Motivation
+-------------
+- many talented local artists get lesser visibility and reach in music streaming applications - increase their reach
+- everybody likes to listen to songs but there is no community of people with similar musical tastes - connect
+- personalized recommendations often tie users down to their history and fail to provide reasons for why something is recommened to the user
+
+song.ly presents an alternative approach to address the above concerns.
+    
+## Introduction
+----------------
+song.ly is a song recommendation application with the following features:  
+> - Suggest songs to a user based on the songs listened to by the most relevant friends of the user
+> - Suggest artists to listen to based on the current location of the user
+> - Suggest friends based on a relevance score which mimics a naive, logical implementation of collaborative filtering defined as:
+
+>> <img src="https://latex.codecogs.com/png.latex?relevance\_score(A,\&space;B)\&space;=\&space;\frac{(count\&space;of\&space;common\&space;songs\&space;between\&space;users\&space;A\&space;and\&space;B)}{(count\&space;of\&space;songs\&space;listened\&space;to\&space;by\&space;user\&space;A)}" title="relevance\_score(A,\ B)\ =\ \frac{(count\ of\ common\ songs\ between\ users\ A\ and\ B)}{(count\ of\ songs\ listened\ to\ by\ user\ A)}" />
+
+## Datasets
+---------------
+I used the "Million Song Dataset" [1] which is "a freely-available collection of audio features and metadata for a million contemporary popular music tracks" according to [Labrosa](http://labrosa.ee.columbia.edu/millionsong) website. Along with the metadata for songs a list of more than 150 M user-song request pairs was obtained from [Echonest](http://labrosa.ee.columbia.edu/millionsong/tasteprofile) [2] and [Last.fm](http://www.last.fm/). Also a list of unique artists with their location information was obtained from Echonest. More details can be found [here](goo.gl/NcaIeP).
+
+## Data Pipeline
+---------------
+<a href="http://tinypic.com?ref=w1dwm8" target="_blank"><img src="http://i64.tinypic.com/w1dwm8.png" border="0" alt="Image and video hosting by TinyPic"></a>
+
+####Ingestion Layer
+[Kafka](http://kafka.apache.org/): The user taste profile is used to synthesize more user-song requests as a stream of request data. A synthesized stream of user's current location and the user-song requests are ingested into Kafka.
+
+####Streaming Layer
+[Spark Streaming](http://spark.apache.org/streaming): The ingested data gets processed by Spark streaming to extract data in the required formats. The information of user-song request with timestamp is stored into [Cassandra](http://cassandra.apache.org/) - a NoSQL data store. The counts for requested songs and the users' current locations are stored in [Redis](http://redis.io) - a caching datastore - for faster access. The data is periodically flushed into [HDFS](http://hortonworks.com/hadoop/hdfs/).
+
+####Batch Layer
+[Spark](http://spark.apache.org): Apache Spark reads data from HDFS to find friend suggestions and songs frequently played together. The recommendations are explained [here](https://goo.gl/Nggqt9).
+
+## Demo
+------------
+The application can be accessed from [song.ly](http://song-ly.herokuapp.com)
