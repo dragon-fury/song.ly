@@ -21,6 +21,7 @@ if __name__ == "__main__":
 	brokers, topic = sys.argv[1:]
 	kvs = KafkaUtils.createDirectStream(ssc, [topic], {"metadata.broker.list": brokers})
 	lines = kvs.map(lambda x: x[1].split(","))
+	
 	song_req_by_time = lines.map(lambda x: {"timestamp" : x[0], "user_id": x[1], "song_id": x[2]})
 	user_to_song = lines.map(lambda x: {"user_id": x[1], "req_time": x[0], "song_id": x[2]})
 	song_to_user = lines.map(lambda x: {"song_id": x[2], "req_time": x[0], "user_id": x[1]})

@@ -4,6 +4,20 @@ from datetime import datetime, timedelta
 from pyspark_cassandra import CassandraSparkContext
 from collections import Counter
 
+"""
+This script calculates relevance_score between users for a given time period.
+
+relevance_score(A,B) = (number of songs common between users A & B)/ (number of songs listened to by user A)
+
+	1. Find all the song requests by a given user within a given period of time (5 weeks here)
+	2. For each song
+		2.1. Find the top N (11 here) users who listened to the song in given time period
+		2.2. Collect the users
+	3. Count the number of times each user occured in the list
+	4. Calculate the relevance score for each user with given user and take top 25 users
+	5. Format and store the data into user_relevance cassandra table
+"""
+
 five_weeks_back = int((datetime.today() + timedelta(weeks=-5)).strftime('%s')) - 1
 now = int(datetime.today().strftime('%s'))
 
@@ -19,8 +33,6 @@ def parse_log_entry(line):
 		return None
 	return (str(val[1]), [str(val[2])])
 
-# Make userid parameterized
-
 if __name__ == "__main__":
 	conf = SparkConf().setAppName("UserUserRelevance").setMaster(config.SPARK_MASTER).set("spark.cassandra.connection.host", config.CASSANDRA_SEED_NODE_IP)
 	sc = CassandraSparkContext(conf=conf)
@@ -33,7 +45,8 @@ if __name__ == "__main__":
 						.keys() \
 						.collect()
 
-	song_map = {}
+	song_map = {} # store song to user mapping for use in later stages
+
 	usersongdb = sc.cassandraTable(config.CASSANDRA_KEYSPACE, "user_to_song")
 	songuserdb = sc.cassandraTable(config.CASSANDRA_KEYSPACE, "song_to_user")
 
@@ -57,7 +70,7 @@ if __name__ == "__main__":
 						.sortBy(lambda x: x[1], ascending=False) \
 						.map(lambda x: x[0]) \
 						.take(11)
-				song_map[song] = list(set(listeners))
+				song_map[song] = list(listeners)
 
 			if user in listeners:
 				listeners.remove(user)
@@ -67,7 +80,6 @@ if __name__ == "__main__":
 
 			user_freq = Counter(user_suggest)
 
-			# relevance_score = # common songs (user, suggested_user)/ #songs for user
 			rdd = sc.parallelize([{
 				"user_id": user,
 				"timestamp": now,
