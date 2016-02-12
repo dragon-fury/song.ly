@@ -20,16 +20,22 @@
 						<ul class="nav navbar-nav navbar-right" style="margin: 15px;">
 							<li><em class="user_name" style="text-transform: capitalize">{{detail.name}}</em></li>
 						</ul>
-						<input type="hidden" class="user_location">{{detail.location}}</input>
+						<input type="hidden" class="user_location" value="{{detail.location}}" />
 					</div>
 				</nav>
 				<div class="row">
 					<div class="col-md-12">
 						<div class="row songs_amazon suggestions">
 							<p class="list-titles"><span>Your friends are listening to</span></p>
+							<div class="col-xs-4 col-md-2 scroller"><ul class="songreq"></ul></div>
 						</div>
 						<div class="row local_artists suggestions">
-							<p class="list-titles"><span>Local artists</span></p>
+							<p class="list-titles"><span>Local artists ({{detail.location}})</span></p>
+							<div class="col-xs-4 col-md-2 scroller"><ul></ul></div>
+						</div>
+						<div class="row frequent suggestions hidden">
+							<p class="list-titles"><span>Users who listened to this also listened</span></p>
+							<div class="col-xs-4 col-md-2 scroller"><ul></ul></div>
 						</div>
 						<div class="row listings">
 							<div class="col-md-4">

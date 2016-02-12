@@ -90,23 +90,22 @@ a, a:hover {
 	margin-bottom: 2px;
 }
 
-.songs_amazon ul, .local_artists ul {
+.songs_amazon ul, .local_artists ul, .frequent ul {
 	display: table;
 	list-style: none;
 	padding: 0;
 }
 
-.songs_amazon li, .local_artists li {
+.songs_amazon li, .local_artists li, .frequent li {
 	display: table-cell;
 	padding-right: 25px;
 }
 
-.songs_amazon li p, .local_artists li p {
+.songs_amazon li p, .local_artists li p, .frequent li p {
 	text-align:center;
 	text-transform:capitalize;
 	padding-top: 10px;
 	padding-bottom: 0;
-
 	font-weight: bold;
 }
 
@@ -123,3 +122,10 @@ ul img {
 	border: 1px solid #000;
 }
 
+.songreq li {
+	cursor: pointer;
+}
+
+.hidden {
+	display: none;
+}

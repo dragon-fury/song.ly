@@ -3,7 +3,7 @@ from cassandra import ReadTimeout
 from datetime import datetime, timedelta
 import json, config
 """
-This class performs all the database access for the application
+	Perform all the database access for the application
 """
 class DBAccess(object):
 	def __init__(self):
@@ -21,7 +21,7 @@ class DBAccess(object):
 
 		results = self.cassandra_session.execute("select follows_id, relevance_score from user_connections where user_id="+user_id)
 		friends = sorted(results, key=lambda row: row[1], reverse=True)
-		send_songs = []
+		recommended_songs = []
 		friends_song_list = []
 
 		if len(friends) > 0:
@@ -37,10 +37,12 @@ class DBAccess(object):
 			recommended_songs = list(set(map(lambda x: x[0], played)).difference(set(map(lambda x: x[0], results))))
 			
 			for song in recommended_songs[0:10]:
-				send_songs.append(json.loads(self.redis_session.hget("songs", str(song))))
+				song_json = json.loads(self.redis_session.hget("songs", str(song)))
+				song_json["song_id"] = song		
+				recommended_songs.append(song_json)
 
 		friend = json.loads(self.redis_session.hget("usersid", most_relevant_friend))
-		return {"friend": friend["name"], "songs": send_songs}
+		return {"friend": friend["name"], "songs": recommended_songs}
 
 	"""
 		Find the suggested user list with their relevance score calculated in last 5 weeks.
@@ -75,6 +77,23 @@ class DBAccess(object):
 
 		self.group = "usersid"
 		return map(self._make_json, friend_suggestion_list)
+
+
+	"""
+		Get the songs that are frequently played together with the current song
+		selected by the user. This way we can handle cold-start problem to some
+		extent.
+	"""
+	def get_frequent_songs(self, song_id):
+		results = self.cassandra_session.execute("select freq_song_id from frequent_song_pairs where song_id="+song_id+"limit 10")
+		recommend_songs = []
+		for song in results:
+			song_json = json.loads(self.redis_session.hget("songs", str(song.freq_song_id)))
+			song_json["song_id"] = song
+			recommend_songs.append(song_json)
+
+		return {"songs": recommend_songs}
+
 
 	def get_local_artists(self, area):
 		artist_ids = (self.redis_session.hget("location", area)).split(",")
