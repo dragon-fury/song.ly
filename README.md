@@ -18,7 +18,7 @@ song.ly is a song recommendation application with the following features:
 > - Suggest artists to listen to based on the current location of the user
 > - Suggest friends based on a relevance score which mimics a naive, logical implementation of collaborative filtering defined as:
 
->> <img src="https://latex.codecogs.com/png.latex?relevance\_score(A,\&space;B)\&space;=\&space;\frac{(count\&space;of\&space;common\&space;songs\&space;between\&space;users\&space;A\&space;and\&space;B)}{(count\&space;of\&space;songs\&space;listened\&space;to\&space;by\&space;user\&space;A)}" title="relevance\_score(A,\ B)\ =\ \frac{(count\ of\ common\ songs\ between\ users\ A\ and\ B)}{(count\ of\ songs\ listened\ to\ by\ user\ A)}" />
+>> <a href="http://tinypic.com?ref=w2hc1g" target="_blank"><img src="http://i66.tinypic.com/w2hc1g.jpg" border="0" alt="Image and video hosting by TinyPic"></a>
 
 ## Datasets
 ---------------
@@ -39,7 +39,7 @@ I used the "Million Song Dataset" [1] which is "a freely-available collection of
 
 ## Demo
 ------------
-The application can be accessed from [song.ly](http://song-ly.herokuapp.com)
+The application can be accessed at [song.ly](http://song-ly.herokuapp.com)
 
 
 ## References
