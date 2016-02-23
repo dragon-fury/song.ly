@@ -6,19 +6,20 @@ song\.ly (song + friendly) is a song recommendation application built during my 
 Motivation
 =============
 - many talented local artists get lesser visibility and reach in music streaming applications - increase their reach
-- everybody likes to listen to songs but there is no community of people with similar musical tastes - connect
-- personalized recommendations often tie users down to their history and fail to provide reasons for why something is recommened to the user
+- build a community of people with similar musical tastes and let them explore music together - connect
+- personalized recommendations often tie users down to their history and fail to provide reasons for why something is recommened to the user - provide transparency
 
-song.ly presents an alternative approach to address the above concerns.
+song.ly presents an approach to address the above concerns.
     
 Introduction
 ================
 song.ly is a song recommendation application with the following features:  
-> - Suggest songs to a user based on the songs listened to by the most relevant friends of the user
-> - Suggest artists to listen to based on the current location of the user
-> - Suggest friends based on a relevance score which mimics a naive, logical implementation of collaborative filtering defined as:
+- Suggest songs to a user based on the songs listened to by the most relevant friends of the user
+- Suggest artists to listen to based on the current location of the user
+- Suggest songs frequently played together with the current song (users who listened to this also listened to)
+- Suggest friends based on a relevance score which mimics a naive, logical implementation of collaborative filtering defined as:
 
->> <a href="http://tinypic.com?ref=w2hc1g" target="_blank"><img src="http://i66.tinypic.com/w2hc1g.jpg" border="0" alt="Image and video hosting by TinyPic"></a>
+> <a href="http://tinypic.com?ref=w2hc1g" target="_blank"><img src="http://i66.tinypic.com/w2hc1g.jpg" border="0" alt="Image and video hosting by TinyPic"></a>
 
 Datasets
 =============
@@ -35,7 +36,7 @@ Data Pipeline
 [Spark Streaming](http://spark.apache.org/streaming): The ingested data gets processed by Spark streaming to extract data in the required formats. The information of user-song request with timestamp is stored into [Cassandra](http://cassandra.apache.org/) - a NoSQL data store. The counts for requested songs and the users' current locations are stored in [Redis](http://redis.io) - a caching datastore - for faster access. The data is periodically flushed into [HDFS](http://hortonworks.com/hadoop/hdfs/).
 
 ####Batch Layer
-[Spark](http://spark.apache.org): Apache Spark reads data from HDFS to find friend suggestions and songs frequently played together. The recommendations are explained [here](https://goo.gl/Nggqt9).
+[Spark](http://spark.apache.org): Apache Spark reads data from HDFS to find friend suggestions, update relevance scores and mine frequent pattern among songs. The recommendations are explained [here](https://goo.gl/Nggqt9).
 
 Cassandra Tables
 ===============
@@ -51,6 +52,8 @@ Demo
 The application can be accessed at [song.ly](http://song-ly.herokuapp.com)
 To login username: adam, password: 123
 
+**The app may not work as intended after Feb 28. The AWS machines will be terminated after that. 
+Please look at the video for a demo.**  
 Video demo: https://youtu.be/kdWi8uVOJh8
 
 
